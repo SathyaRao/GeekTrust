@@ -3,32 +3,32 @@ package com.waterManagement.model;
 import java.util.HashMap;
 
 public class Rooms {
-	private static int members;
-	private static HashMap<Integer,Integer> rooms = new HashMap<Integer,Integer>();
-	private static int guests;
+	private int members;
+	private HashMap<Integer,Integer> rooms = new HashMap<Integer,Integer>();
+	private int guests;
 	
 	public Rooms(){
-		Rooms.rooms.put(2, 3);
-		Rooms.rooms.put(3, 5);
+		this.rooms.put(2, 3);
+		this.rooms.put(3, 5);
 	}
 	public int getGuests() {
-		return guests;
+		return this.guests;
 	}
 	public void setGuests(int guests) {
-		Rooms.guests = guests;
+		this.guests = guests;
 	}
 	public int getRooms(int room) {
-		return rooms.get(room);
+		return this.rooms.get(room);
 	}
 	public void setRooms() {
-		Rooms.rooms.put(2, 3);
-		Rooms.rooms.put(3, 5);
+		this.rooms.put(2, 3);
+		this.rooms.put(3, 5);
 	}
 	public int getMembers() {
-		return members;
+		return this.members;
 	}
 	public void setMembers(int members) {
-		Rooms.members = members;
+		this.members = members;
 	}
 
 }

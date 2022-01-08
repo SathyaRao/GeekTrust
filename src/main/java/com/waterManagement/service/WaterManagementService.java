@@ -1,6 +1,9 @@
 package com.waterManagement.service;
 
+import java.util.Set;
+
 import com.waterManagement.model.Bill;
+import com.waterManagement.model.Commands;
 import com.waterManagement.model.Rooms;
 import com.waterManagement.model.Water;
 import com.waterManagement.resources.Constants;
@@ -12,7 +15,9 @@ public class WaterManagementService implements WaterManagementInterface{
 	Water water = new Water();
 	Rooms rooms = new Rooms();
 	Bill bill = new Bill();
-	
+	Commands commands = new Commands();
+	Set<String> commandSet = commands.getCommands();
+			
 	public void findTotalBill(String[] arguments){
 		String command = null;
 		for (int i = 0;i<arguments.length;i++){
@@ -20,16 +25,14 @@ public class WaterManagementService implements WaterManagementInterface{
 	    		break;
 	    	}
 	    	String[] commandList = new String[arguments.length];
-	    	if(arguments[i].equals(Constants.ALLOT_WATER) ||
-	    			arguments[i].equals(Constants.ADD_GUESTS) ||
-	    			arguments[i].equals(Constants.BILL)){
+			
+			if(commandSet.contains(arguments[i])){
 	    		command = arguments[i];
 			}
 	    	commandList = this.getCommands(arguments,i);
 	    	i = i + WaterManagementService.commandCount;
 	    	if(command != null){
 	    		this.executeCommand(command,commandList);
-	    		
 	    	}
 	    }
 	}
@@ -41,12 +44,7 @@ public class WaterManagementService implements WaterManagementInterface{
 		String[] list = new String[arguments.length];
 		int k = Constants.ZERO;
 		for (int j = index+Constants.ONE;j<arguments.length;j++){
-    		if(arguments[j] == null){
-        		break;
-        	}
-    		if(!arguments[j].equals(Constants.ALLOT_WATER) &&
-    				!arguments[j].equals(Constants.ADD_GUESTS) &&
-    				!arguments[j].equals(Constants.BILL)){
+			if(!commandSet.contains(arguments[j])){
         		if(arguments[j] != null){
         			list[k++] = arguments[j];
         		}
@@ -72,15 +70,12 @@ public class WaterManagementService implements WaterManagementInterface{
 		double corporationWaterSum = Constants.ZERO, borewellWaterSum = Constants.ZERO;
 		float ratio = (float)allottedWater/(corporationWater+borewellWater);
 		corporationWaterSum = (ratio)*corporationWater;
-		//
 		borewellWaterSum = (ratio)*borewellWater*1.5;
-		//
-		totalBill = (int)(corporationWaterSum + borewellWaterSum);
-		//
+		totalBill = (int)Math.ceil(corporationWaterSum + borewellWaterSum);
 		if(guests>Constants.ZERO){
 			extraWater = guests*Constants.TEN*Constants.THIRTY;
 		}
-		totalBill += calculateTankerWaterCost(extraWater);
+		totalBill += water.calculateTankerWaterCost(extraWater);
 		totalWaterBill = totalBill;
 		System.out.println( (allottedWater + extraWater) + " " + totalBill);
 	}
@@ -91,29 +86,6 @@ public class WaterManagementService implements WaterManagementInterface{
 	
 	public int getGuests() {
 		return guests;
-	}
-	
-	public int calculateTankerWaterCost(int extraWater) {
-		int rate = Constants.ZERO, surplus = Constants.ZERO;
-		if(extraWater>Constants.THREE_THOUSAND){
-			surplus = extraWater - Constants.THREE_THOUSAND;
-			rate += surplus * Constants.EIGHT;
-			extraWater -= surplus;
-		} 
-		if(extraWater>Constants.THOUSAND_FIVE_HUNDRED && extraWater <=Constants.THREE_THOUSAND){
-			surplus = extraWater - Constants.THOUSAND_FIVE_HUNDRED;
-			rate += surplus * Constants.FIVE;
-			extraWater -= surplus;
-		} 
-		if(extraWater>Constants.FIVE_HUNDRED && extraWater <=Constants.THOUSAND_FIVE_HUNDRED){
-			surplus = extraWater - Constants.FIVE_HUNDRED;
-			rate += surplus * Constants.THREE;
-			extraWater -= surplus;
-		} 
-		if(extraWater>Constants.ZERO && extraWater <=Constants.FIVE_HUNDRED){
-			rate += extraWater*Constants.TWO;
-		}
-		return rate;
 	}
 
 	public void allotWater(String bedrooms, String ratio) {

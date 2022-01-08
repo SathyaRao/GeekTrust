@@ -10,8 +10,6 @@ public interface WaterManagementInterface {
 	
 	public int getGuests();
 	
-	public int calculateTankerWaterCost(int extraWater);
-
 	public void allotWater(String bedrooms, String ratio);
 	//public int getAllottedWater();
 }

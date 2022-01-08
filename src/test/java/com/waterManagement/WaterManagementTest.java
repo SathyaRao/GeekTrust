@@ -1,13 +1,10 @@
 package com.waterManagement;
 
-//import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.waterManagement.model.Bill;
 import com.waterManagement.model.Water;
 import com.waterManagement.service.WaterManagementService;
 /**
@@ -24,14 +21,21 @@ public class WaterManagementTest
     
 	WaterManagementService waterManagementService = new WaterManagementService();
 	Water water = new Water();
-    
+    WaterManagementEnum ADD_GUESTS =  WaterManagementEnum.ADD_GUESTS;
+    WaterManagementEnum ALLOT_WATER =  WaterManagementEnum.ALLOT_WATER;
+    WaterManagementEnum BILL =  WaterManagementEnum.BILL;
+    Bill bill = new Bill();
 	@Test
     public void calculateBillTest(){
     	waterManagementService.allotWater("3","5:4");
-    	waterManagementService.addGuests("8");
-    	waterManagementService.calculateTankerWaterCost(1500);
+    	waterManagementService.addGuests("18");
+    	water.calculateTankerWaterCost(1500);
     	waterManagementService.calculateBill();
-    	assertEquals(39733,WaterManagementService.totalWaterBill);
+        bill.setTotalWaterBill(bill.getTotalWaterBill());
+        //Bill.setBorewellWaterBill((int)Bill.getBorewellWaterBill());
+        bill.setCorporationWaterBill(bill.getCorporationWaterBill());
+        bill.setTankerWaterBill(bill.getTankerWaterBill());
+    	assertEquals(63734,WaterManagementService.totalWaterBill);
     }
     
 	@Test
@@ -42,7 +46,7 @@ public class WaterManagementTest
     
     @Test
     public void calculateTankerWaterCostTest(){
-    	assertEquals(4000,waterManagementService.calculateTankerWaterCost(1500));
+    	assertEquals(4000,water.calculateTankerWaterCost(1500));
     }
     
     @Test
@@ -57,7 +61,6 @@ public class WaterManagementTest
     	assertEquals(4,WaterManagementService.commandCount);
     }
     
-    @SuppressWarnings("deprecation")
 	@Test
     public void executeCommandTest(){
     	String[] commands = {"ALLOT_WATER", "3", "5:4", "ADD_GUESTS", "3", "ADD_GUESTS", "5"};

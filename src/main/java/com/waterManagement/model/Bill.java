@@ -1,35 +1,35 @@
 package com.waterManagement.model;
 
 public class Bill extends Water{
-	private static int totalWaterBill;
-	private static int tankerWaterBill;
-	private static int borewellWaterBill;
-	private static int corporationWaterBill;
+	private   int totalWaterBill;
+	private   int tankerWaterBill;
+	private   int borewellWaterBill;
+	private   int corporationWaterBill;
 
-	public static int getTotalWaterBill() {
+	public   int getTotalWaterBill() {
 		return totalWaterBill;
 	}
-	public static void setTotalWaterBill(int totalWaterBill) {
-		Bill.totalWaterBill = totalWaterBill;
+	public   void setTotalWaterBill(int totalWaterBill) {
+		this.totalWaterBill = totalWaterBill;
 	}
-	public static int getTankerWaterBill() {
+	public   int getTankerWaterBill() {
 		return tankerWaterBill;
 	}
-	public static void setTankerWaterBill(int tankerWaterBill) {
-		Bill.tankerWaterBill = tankerWaterBill;
+	public   void setTankerWaterBill(int tankerWaterBill) {
+		 this.tankerWaterBill = tankerWaterBill;
 	}
-	public static int getBorewellWaterBill() {
+	public   int getBorewellWaterBill() {
 		return borewellWaterBill;
 	}
-	public static void setBorewellWaterBill(int boreWellWaterBill) {
+	public   void setBorewellWaterBill(int boreWellWaterBill) {
 		boreWellWaterBill = Integer.parseInt((Water.allottedWater/(Water.corporationWater+Water.borewellWater))*Water.borewellWater*1.5+"");
-		Bill.borewellWaterBill = boreWellWaterBill;
+		 this.borewellWaterBill = boreWellWaterBill;
 	}
-	public static int getCorporationWaterBill() {
+	public   int getCorporationWaterBill() {
 		return corporationWaterBill;
 	}
-	public static void setCorporationWaterBill(int corporationWaterBill) {
+	public   void setCorporationWaterBill(int corporationWaterBill) {
 		corporationWaterBill = Integer.parseInt((Water.allottedWater/(Water.corporationWater+Water.borewellWater))*Water.corporationWater+"");
-		Bill.corporationWaterBill = corporationWaterBill;
+		 this.corporationWaterBill = corporationWaterBill;
 	}
 }
