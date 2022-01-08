@@ -14,8 +14,10 @@ public class Rooms {
 	public int getGuests() {
 		return this.guests;
 	}
-	public void setGuests(int guests) {
-		this.guests = guests;
+	public void setGuests(String guests) {
+		//this.guests = guests;
+
+		this.guests += Integer.parseInt(guests);
 	}
 	public int getRooms(int room) {
 		return this.rooms.get(room);

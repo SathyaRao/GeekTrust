@@ -3,34 +3,35 @@ package com.waterManagement.model;
 import com.waterManagement.resources.Constants;
 
 public class Water {
-	protected static int borewellWater;
-	protected static int corporationWater;
-	protected static int tankerWater;
-	protected static int allottedWater;
+	private int borewellWater;
+	private int corporationWater;
+	private int tankerWater;
+	private int allottedWater;
+	Rooms rooms = new Rooms();
 	
 	public int getBorewellWater() {
-		return borewellWater;
+		return this.borewellWater;
 	}
 	public void setBorewellWater(int borewellWater) {
-		Water.borewellWater = borewellWater;
+		this.borewellWater = borewellWater;
 	}
 	public int getCorporationWater() {
-		return corporationWater;
+		return this.corporationWater;
 	}
 	public void setCorporationWater(int corporationWater) {
-		Water.corporationWater = corporationWater;
+		this.corporationWater = corporationWater;
 	}
 	public int getTankerWater() {
-		return tankerWater;
+		return this.tankerWater;
 	}
 	public void setTankerWater(int tankerWater) {
-		Water.tankerWater = tankerWater;
+		this.tankerWater = tankerWater;
 	}
 	public int getAllottedWater() {
-		return allottedWater;
+		return this.allottedWater;
 	}
 	public void setAllottedWater(int allottedWater) {
-		Water.allottedWater = allottedWater;
+		this.allottedWater = allottedWater;
 	}
 
 	public int calculateTankerWaterCost(int extraWater){
@@ -54,6 +55,13 @@ public class Water {
 			rate += extraWater*Constants.TWO;
 		}
 		return rate;
+	}
+	public void allotWater(String bedrooms, String ratio) {
+		String[] str = ratio.split(":");
+		this.setCorporationWater(Integer.parseInt(str[Constants.ZERO]));
+		this.setBorewellWater(Integer.parseInt(str[Constants.ONE]));
+		int members = rooms.getRooms(Integer.parseInt(bedrooms));
+		this.setAllottedWater(members*Constants.TEN*Constants.THIRTY);
 	}
 	
 }
